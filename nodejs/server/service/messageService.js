@@ -1,4 +1,5 @@
 import messageDTO from '../dto/dbMessage.js';
+import socket from '../socket.js';
 
 const functions = {
     add: function addMessage(chat, user, message, file) {
@@ -19,6 +20,7 @@ const functions = {
                 date: new Date()
             }
             messageDTO.addMessageToDb(fullMessage);
+            socket.socket.io.emit('message', fullMessage);
             resolve(fullMessage);
         });
     },
